@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager - Node.js App</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Task Manager <small>(Node.js Version)</small></h1>
+        
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Enter a new task...">
+            <button id="addBtn">Add Task</button>
+        </div>
+        
+        <div class="filter-section">
+            <a href="/" class="filter-btn <%= filter === 'all' ? 'active' : '' %>">All</a>
+            <a href="/tasks/filter/active" class="filter-btn <%= filter === 'active' ? 'active' : '' %>">Active</a>
+            <a href="/tasks/filter/completed" class="filter-btn <%= filter === 'completed' ? 'active' : '' %>">Completed</a>
+        </div>
+        
+        <ul class="task-list" id="taskList">
+            <% if (tasks.length === 0) { %>
+                <div class="empty-state">
+                    <% if (filter === 'all') { %>
+                        No tasks yet. Add a task to get started!
+                    <% } else if (filter === 'active') { %>
+                        No active tasks. Great job!
+                    <% } else if (filter === 'completed') { %>
+                        No completed tasks yet.
+                    <% } %>
+                </div>
+            <% } else { %>
+                <% tasks.forEach(task => { %>
+                    <li class="task-item <%= task.completed ? 'completed' : '' %>" data-task-id="<%= task.id %>">
+                        <input type="checkbox" <%= task.completed ? 'checked' : '' %>>
+                        <span class="task-text"><%= task.text %></span>
+                        <button class="delete-btn">Delete</button>
+                    </li>
+                <% }); %>
+            <% } %>
+        </ul>
+        
+        <div class="stats" id="stats">
+           
+        </div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
